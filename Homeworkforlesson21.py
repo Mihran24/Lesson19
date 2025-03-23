@@ -1,14 +1,16 @@
 import pygame
-# Initialize Pygame and screen dimensions 
+import sys
+
+# Initialize Pygame
 pygame.init()
+
+# Set up the display
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("1st time on pygame")
 SCREEN_WIDTH, SCREEN_HEIGHT = 500, 500
-# Initialize display surface and set title
 display_surface = pygame.display.set_mode ((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption('Adding image and background image')
-# Load and scale images directly
-background_image = pygame.transform.scale(
-pygame.image.load('background.jpeg').convert(),
-(SCREEN_WIDTH, SCREEN_HEIGHT))
+# Define the background color (RGB format)
+background_color = (58,58,58)  # Grey
 penguin_image = pygame.transform.scale(
 pygame.image.load('hellopenguin.jpg').convert_alpha(), (200, 200))
 penguin_rect = penguin_image.get_rect(center=(SCREEN_WIDTH // 2,
@@ -24,17 +26,22 @@ def game_loop():
             if event.type == pygame.QUIT:
                 running = False
 
-        display_surface.blit(background_image,(0,0))
         display_surface.blit(penguin_image, penguin_rect)
         display_surface.blit(text, text_rect)
 
-    pygame.display.update()
-    clock.tick(60)
+# Main loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-    pygame.quit()
-    
+    # Fill the screen with the background color
+    screen.fill(background_color)
 
+    # Update the display
+    pygame.display.flip()
 
-if __name__== 'main':
-    game_loop()
-    display_surface.mainloop()
+# Quit Pygame
+pygame.quit()
+sys.exit()
